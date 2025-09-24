@@ -1,0 +1,47 @@
+{% extends "website/base.html" %}
+{% block title %}{{ post.title }} - SaborWasabi{% endblock %}
+
+{% block content %}
+<article class="post-detail">
+  <h1>{{ post.title }}</h1>
+  <p class="meta">Publicado em {{ post.created_at|date:"d/m/Y H:i" }}</p>
+
+  <div class="post-body">
+    {{ post.content|linebreaks }}
+  </div>
+
+  <div class="post-actions">
+    <form method="post" style="display:inline">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="like">
+      <button class="btn small" type="submit">👍 Curtir ({{ post.likes_count }})</button>
+    </form>
+  </div>
+
+  <section class="comments">
+    <h3>Comentários ({{ post.comments.count }})</h3>
+
+    <ul class="comment-list">
+      {% for c in post.comments.all %}
+      <li>
+        <strong>{{ c.name }}</strong> <span class="meta">{{ c.created_at|date:"d/m/Y H:i" }}</span>
+        <p>{{ c.text|linebreaks }}</p>
+      </li>
+      {% empty %}
+      <li>Seja o primeiro a comentar!</li>
+      {% endfor %}
+    </ul>
+
+    <h4>Adicionar comentário</h4>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="comment">
+      <label for="cname">Nome</label>
+      <input id="cname" name="name" required>
+      <label for="ctext">Comentário</label>
+      <textarea id="ctext" name="text" rows="4" required></textarea>
+      <button class="btn" type="submit">Enviar comentário</button>
+    </form>
+  </section>
+</article>
+{% endblock %}

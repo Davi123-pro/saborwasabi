@@ -1,34 +1,77 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SaborWasabi{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}SaborWasabi{% endblock %}</title>
+  <!-- Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Cabeçalho -->
-    <header>
-        <h1>SaborWasabi</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Início</a></li>
-                <li><a href="/team">Nosso Time</a></li>
-                <li><a href="/posts">Posts</a></li>
-                <li><a href="/contact">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">SaborWasabi</a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="{% url 'home' %}">Início</a></li>
+          <li><a href="{% url 'team' %}">Nosso Time</a></li>
+          <li><a href="{% url 'posts' %}">Posts</a></li>
+          <li><a href="{% url 'contact' %}">Contato</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Abrir menu">☰</button>
+    </div>
+  </header>
 
-    <!-- Conteúdo dinâmico -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+  <!-- MESSAGES -->
+  <div class="container">
+    {% if messages %}
+      <ul class="messages">
+        {% for m in messages %}
+          <li class="msg {{ m.tags }}">{{ m }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
 
-    <!-- Rodapé -->
-    <footer>
-        <p>© 2025 SaborWasabi - Todos os direitos reservados</p>
-        <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-    </footer>
+  <!-- MAIN -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>SaborWasabi</h4>
+        <p>Produção sustentável de wasabi verdadeiro — qualidade para restaurantes e consumidores.</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="{% url 'home' %}">Início</a></li>
+          <li><a href="{% url 'posts' %}">Posts</a></li>
+          <li><a href="{% url 'contact' %}">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p>email: contato@saborwasabi.com</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© {% now "Y" %} SaborWasabi — Todos os direitos reservados</p>
+      <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.main-nav ul');
+    btn && btn.addEventListener('click', ()=> nav.classList.toggle('open'));
+  </script>
 </body>
 </html>

@@ -1,15 +1,19 @@
 {% extends "website/base.html" %}
-
 {% block title %}Posts - SaborWasabi{% endblock %}
 
 {% block content %}
 <section class="posts">
-    <h2>Posts</h2>
-    <div class="post">
-        <h3>Título do Post</h3>
-        <p>Conteúdo resumido do post...</p>
-        <a href="#">Leia mais</a>
-        <p>👍 10 curtidas | 💬 5 comentários</p>
-    </div>
+  <h2>Posts</h2>
+
+  {% for post in posts %}
+  <article class="post-card">
+    <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
+    <p class="meta">Publicado em {{ post.created_at|date:"d/m/Y" }} — 👍 {{ post.likes_count }} • 💬 {{ post.comments_count }}</p>
+    <p>{{ post.excerpt }}</p>
+    <a href="{% url 'post_detail' post.slug %}" class="read-more">Leia mais →</a>
+  </article>
+  {% empty %}
+  <p>Não há posts ainda.</p>
+  {% endfor %}
 </section>
 {% endblock %}

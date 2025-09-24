@@ -1,11 +1,17 @@
 {% extends "website/base.html" %}
-
 {% block title %}Início - SaborWasabi{% endblock %}
 
 {% block content %}
 <section class="hero">
-    <h2>O verdadeiro sabor do Wasabi</h2>
+  <div class="hero-inner">
+    <h1>O verdadeiro sabor do Wasabi</h1>
     <p>Produção sustentável e qualidade premium para restaurantes e amantes da culinária japonesa.</p>
-    <button>Saiba Mais</button>
+    <a class="btn" href="{% url 'posts' %}">Ver Posts</a>
+  </div>
+</section>
+
+<section class="about">
+  <h2>Sobre nós</h2>
+  <p>Na SaborWasabi cultivamos wasabi real com métodos sustentáveis, linha B2B para restaurantes e pequenas embalagens para consumidores.</p>
 </section>
 {% endblock %}
