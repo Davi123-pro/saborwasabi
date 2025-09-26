@@ -6,14 +6,13 @@
   <h2>Posts</h2>
 
   {% for post in posts %}
-  <article class="post-card">
-    <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
-    <p class="meta">Publicado em {{ post.created_at|date:"d/m/Y" }} — 👍 {{ post.likes_count }} • 💬 {{ post.comments_count }}</p>
-    <p>{{ post.excerpt }}</p>
-    <a href="{% url 'post_detail' post.slug %}" class="read-more">Leia mais →</a>
-  </article>
-  {% empty %}
-  <p>Não há posts ainda.</p>
-  {% endfor %}
+<article class="post-card">
+  <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
+  <p class="meta">Publicado em {{ post.created_at|date:"d/m/Y" }} — 👍 {{ post.likes_count }} • 💬 {{ post.comments_count }}</p>
+  <p>{{ post.excerpt }}</p>
+  <a href="{% url 'post_detail' post.slug %}" class="read-more">Leia mais →</a>
+</article>
+{% endfor %}
+
 </section>
 {% endblock %}

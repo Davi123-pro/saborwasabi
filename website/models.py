@@ -1,3 +1,4 @@
+# website/models.py (exemplo — confirme se coincide com o seu)
 from django.db import models
 from django.utils.text import slugify
 
@@ -39,3 +40,17 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comentário de {self.name} em {self.post.title}"
 
+class Contact(models.Model):
+    nome = models.CharField("Nome", max_length=120)
+    empresa = models.CharField("Empresa", max_length=120, blank=True)
+    email = models.EmailField("E-mail", max_length=254)
+    mensagem = models.TextField("Mensagem")
+    created_at = models.DateTimeField("Enviado em", auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Contato"
+        verbose_name_plural = "Contatos"
+
+    def __str__(self):
+        return f"{self.nome} — {self.email} ({self.created_at:%d/%m/%Y %H:%M})"

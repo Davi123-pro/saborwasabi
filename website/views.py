@@ -1,6 +1,8 @@
+# website/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Post, Comment
+from .models import Post, Comment, Contact
+from .forms import ContactForm
 
 def home(request):
     return render(request, 'website/home.html')
@@ -9,16 +11,22 @@ def team(request):
     return render(request, 'website/team.html')
 
 def contact(request):
+    """
+    Renderiza e processa o formulário de contato.
+    Se o form for válido, salva no banco (Contact) e mostra mensagem de sucesso.
+    """
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        empresa = request.POST.get('empresa')
-        email = request.POST.get('email')
-        mensagem = request.POST.get('mensagem')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Mensagem enviada com sucesso! Entraremos em contato.')
+            return redirect('contact')
+        else:
+            messages.error(request, 'Por favor corrija os erros no formulário.')
+    else:
+        form = ContactForm()
 
-        messages.success(request, 'Mensagem enviada! Obrigado pelo contato.')
-        return redirect('contact')
-
-    return render(request, 'website/contact.html')
+    return render(request, 'website/contact.html', {'form': form})
 
 def posts_list(request):
     posts = Post.objects.all()

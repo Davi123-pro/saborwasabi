@@ -4,19 +4,42 @@
 {% block content %}
 <section class="contact">
   <h2>Entre em Contato</h2>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for m in messages %}
+        <li class="{{ m.tags }}">{{ m }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
   <form method="post" class="contact-form">
     {% csrf_token %}
-    <label for="nome">Nome</label>
-    <input id="nome" name="nome" required>
+    {{ form.non_field_errors }}
 
-    <label for="empresa">Empresa</label>
-    <input id="empresa" name="empresa">
+    <div class="form-row">
+      <label for="{{ form.nome.id_for_label }}">Nome</label>
+      {{ form.nome }}
+      {{ form.nome.errors }}
+    </div>
 
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required>
+    <div class="form-row">
+      <label for="{{ form.empresa.id_for_label }}">Empresa</label>
+      {{ form.empresa }}
+      {{ form.empresa.errors }}
+    </div>
 
-    <label for="mensagem">Mensagem</label>
-    <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+    <div class="form-row">
+      <label for="{{ form.email.id_for_label }}">Email</label>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+
+    <div class="form-row">
+      <label for="{{ form.mensagem.id_for_label }}">Mensagem</label>
+      {{ form.mensagem }}
+      {{ form.mensagem.errors }}
+    </div>
 
     <button class="btn" type="submit">Enviar Mensagem</button>
   </form>
